@@ -27,6 +27,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'pry-rails'
   gem "web-console", "4.2.0"
 end
 
