@@ -3,6 +3,7 @@ class User < ApplicationRecord
 
     before_save :downcase_email
     before_create :create_activation_digest
+    has_many :microposts, dependent: :destroy
 
     # tsao before_save k co : ma length voi format lai co 
     validates :name, presence: true, length: {maximum: 50}
@@ -12,6 +13,10 @@ class User < ApplicationRecord
                       uniqueness: true
     has_secure_password
     validates :password, presence: true, length: { minimum: 6 }, allow_nil: true
+
+    def feed
+        Micropost.where("user_id = ?", id)
+    end
 
     def remember
         self.remember_token = User.new_token
